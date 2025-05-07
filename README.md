@@ -70,7 +70,7 @@
 1. Клонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/MikhailovAlexander/construct-tasks.git
+   git clone https://github.com/devops-practical-classes-25/construct-tasks-base.git
    cd construct-tasks
    ```
 
