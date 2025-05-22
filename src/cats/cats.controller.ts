@@ -46,8 +46,7 @@ export class CatsController {
     description: 'Conflict - Cat with this name already exists',
   })
   async create(@Body() createCatDto: CreateCatDto): Promise<CatSchema> {
-    // TODO: Реализовать создание кошки с проверкой на уникальность
-    return this.catsService.create(createCatDto); // временно
+    return this.catsService.create(createCatDto);
   }
 
   @Get()
@@ -59,8 +58,7 @@ export class CatsController {
     isArray: true,
   })
   async findAll(): Promise<Cat[]> {
-    // TODO: Реализовать получение всех кошек
-    return this.catsService.findAll(); // временно
+    return this.catsService.findAll();
   }
 
   @Get(':id')
@@ -73,10 +71,16 @@ export class CatsController {
   })
   @ApiResponse({ status: 404, description: 'Cat not found' })
   async findOne(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id', new ParseIntPipe())
+    id: number,
   ): Promise<Cat> {
-    // TODO: Реализовать поиск кошки по id с обработкой 404
-    return this.catsService.findOne(id); // временно
+    const cat = await this.catsService.findOne(id);
+
+    if (!cat) {
+      throw new NotFoundException(`Cat with id: ${id} was not found`);
+    }
+
+    return cat; 
   }
 
   @Delete(':id')
@@ -89,10 +93,10 @@ export class CatsController {
   })
   @ApiResponse({ status: 404, description: 'Cat not found' })
   async delete(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id', new ParseIntPipe())
+    id: number,
   ): Promise<void> {
-    // TODO: Реализовать удаление кошки по id с обработкой 404
-    await this.catsService.remove(id); // временно
+    await this.catsService.remove(id);
   }
 
   @Patch(':id')
@@ -110,7 +114,6 @@ export class CatsController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() updateCatDto: UpdateCatDto,
   ): Promise<Cat> {
-    // TODO: Реализовать обновление кошки с частичной валидацией и проверкой на уникальность
-    return this.catsService.update(id, updateCatDto); // временно
+    return this.catsService.update(id, updateCatDto);
   }
 }
